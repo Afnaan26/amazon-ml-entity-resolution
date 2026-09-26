@@ -1,0 +1,194 @@
+=== LOADING TRAIN DATASETS ===
+Train S1 rows: 2206821, cols: ['entity_id', 'business_name', 'business_address', 'country']
+Train S2 rows: 5034616, cols: ['entity_id', 'business_name', 'business_address', 'country']
+Train S3 rows: 5285603, cols: ['entity_id', 'business_name', 'business_address', 'country']
+Train GT rows: 2206821, cols: ['source1_entity_id', 'matched_entity_ids']
+
+=== LOADING TEST DATASETS ===
+Test S1 rows: 1732544
+Test S2 rows: 4887273
+Test S3 rows: 5082316
+
+=== NULL RATES IN TRAIN ===
+
+S1 Null Counts & Rates:
+  entity_id: 0 (0.00%)
+  business_name: 0 (0.00%)
+  business_address: 0 (0.00%)
+  country: 0 (0.00%)
+
+S2 Null Counts & Rates:
+  entity_id: 0 (0.00%)
+  business_name: 2 (0.00%)
+  business_address: 168967 (3.36%)
+  country: 0 (0.00%)
+
+S3 Null Counts & Rates:
+  entity_id: 0 (0.00%)
+  business_name: 13 (0.00%)
+  business_address: 175916 (3.33%)
+  country: 0 (0.00%)
+
+=== DUPLICATE ID CHECK ===
+  S1 Duplicate entity_ids: 0
+  S2 Duplicate entity_ids: 0
+  S3 Duplicate entity_ids: 0
+
+=== GROUND TRUTH MATCH COUNT DISTRIBUTION ===
+Matches per S1 entity distribution:
+match_count
+1     242404
+2     375212
+3     530841
+4     484115
+5     321957
+6     164868
+7      63968
+8      18680
+9       4205
+10       534
+11        37
+
+S1 entities total: 2206821, S1 entities in GT: 2206821, S1 entities missing from GT: 0
+
+S2 matches per S1 entity distribution:
+matched_list
+0    287745
+1    789108
+2    652779
+3    333957
+4    119078
+5     24154
+
+S3 matches per S1 entity distribution:
+matched_list
+0    266276
+1    716417
+2    668375
+3    372443
+4    145116
+5     35378
+6      2816
+
+=== COUNTRY DISTRIBUTION IN TRAIN ===
+
+S1 Country Top 10:
+country
+US       1323633
+India     883188
+
+S2 Country Top 10:
+country
+US       3016817
+India    2017799
+
+S3 Country Top 10:
+country
+US       3170056
+India    2115547
+
+=== COUNTRY DISTRIBUTION IN TEST ===
+
+Test S1 Country Top 10:
+country
+India     809986
+US        663106
+France    259452
+
+Test S2 Country Top 10:
+country
+India     2312565
+US        1871330
+France     703378
+
+Test S3 Country Top 10:
+country
+India     2405000
+US        1945701
+France     731615
+
+=== NOISE SAMPLING (60 GROUND TRUTH MATCH PAIRS) ===
+Wrote 60 sample pairs to docs/sample_pairs.txt
+
+=== DEEP EDA: MATCH RATE RELATIONSHIPS (TASK 8) ===
+Definition of Metrics:
+1. S1 Entity Metrics: Mean matches per entity, % of S1 entities with >= 1 S2 match, % with >= 1 S3 match.
+2. Candidate Source Metrics: % of candidate records (S2, S3) that appear in Ground Truth matches.
+
+--- A. S1 Country vs Match Rate ---
+         total_entities  mean_matches  pct_with_s2  pct_with_s3
+country                                                        
+INDIA            883188      3.520421    86.978877    87.935411
+US              1323633      3.514885    86.949253    87.932984
+
+--- B. S1 Name Length Buckets vs Match Rate ---
+             total_entities  mean_matches  pct_with_s2  pct_with_s3
+name_bucket                                                        
+0                         0           NaN          NaN          NaN
+1-10                  69652      3.503833    87.025498    87.605525
+11-20                696517      3.512690    86.847270    87.944731
+21-30                974815      3.519943    87.019178    87.960280
+31-50                464076      3.519527    86.998250    87.909523
+51+                    1761      3.574106    87.507098    88.529245
+
+--- C. S1 Address Presence vs Match Rate ---
+             total_entities  mean_matches  pct_with_s2  pct_with_s3
+has_address                                                        
+True                2206821      3.517101    86.961108    87.933956
+
+--- D. S1 Postal Code Presence vs Match Rate ---
+                 total_entities  mean_matches  pct_with_s2  pct_with_s3
+has_postal_code                                                        
+False                   2059564      3.517439    86.968067    87.938224
+True                     147257      3.512376    86.863782    87.874261
+
+--- E. S1 Name Presence vs Match Rate ---
+          total_entities  mean_matches  pct_with_s2  pct_with_s3
+has_name                                                        
+True             2206821      3.517101    86.961108    87.933956
+
+--- Candidate Sources (S2 / S3) Match Rate Analysis ---
+
+Source 2 Candidate Ground Truth Match Rates:
+  Overall Match Rate: 3,693,619 / 5,034,616 (73.36%)
+  Match Rate by Address Presence:
+                    count      mean
+business_address                   
+False              168967  0.977611
+True              4865649  0.725173
+  Match Rate by Postal Code Presence:
+                    count      mean
+business_address                   
+False             4665476  0.735789
+True               369140  0.706545
+  Match Rate by Name Length Bucket:
+                 count      mean
+business_name                   
+0                    2  1.000000
+1-10            171395  0.915248
+11-20          1485062  0.833290
+21-30          2025290  0.732577
+31-50          1326884  0.607713
+51+              25983  0.354616
+
+Source 3 Candidate Ground Truth Match Rates:
+  Overall Match Rate: 3,944,746 / 5,285,603 (74.63%)
+  Match Rate by Address Presence:
+                    count      mean
+business_address                   
+False              175916  0.976796
+True              5109687  0.738384
+  Match Rate by Postal Code Presence:
+                    count      mean
+business_address                   
+False             4899876  0.748525
+True               385727  0.718293
+  Match Rate by Name Length Bucket:
+                 count      mean
+business_name                   
+0                   13  1.000000
+1-10            237297  0.939506
+11-20          1524784  0.835924
+21-30          2060136  0.734628
+31-50          1413206  0.636231
+51+              50167  0.690274

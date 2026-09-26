@@ -1,0 +1,25 @@
+# Dataset
+dataset/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Pytest
+.pytest_cache/
+
+# Python packages
+*.egg-info/
+
+# Challenge/sample data
+sample_pairs.json
